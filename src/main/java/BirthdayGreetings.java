@@ -28,7 +28,8 @@ public class BirthdayGreetings {
     public static final int EMAIL = 3;
 
     // 文件路径
-    public static final String PATHNAME = "F:\\employee_records.txt";
+    //public static final String PATHNAME = "F:\\employee_records.txt";
+    public static final String PATHNAME = "src/employee_records.txt";
 
     // 发件人电子邮箱
     public static final String SENDER = "1733144213@qq.com";
@@ -68,7 +69,7 @@ public class BirthdayGreetings {
 
         List<Employee> list = new ArrayList<>();
         for(int i = 0;i < array.size();i++) {
-            String[] s =array.get(i).split("，");
+            String[] s =array.get(i).split(",");
             Employee employee = new Employee();
             employee.setSurname(s[SURNAME]);
             employee.setName(s[NAME]);
