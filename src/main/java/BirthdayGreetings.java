@@ -49,36 +49,46 @@ public class BirthdayGreetings {
      * @throws IOException
      * @throws ParseException
      */
-    public static List<Employee> readFile() throws IOException, ParseException {
-        File f = new File(PATHNAME);
-        BufferedReader bf = null;
+    public static List<Employee> readFile() {
+        List<Employee> list = new ArrayList<>();
+
         try {
+            File f = new File(PATHNAME);
+            BufferedReader bf;
             FileInputStream fis = new FileInputStream(f);
             InputStreamReader isr = new InputStreamReader(fis,"gb2312"); //指定以UTF-8编码读入
             bf = new BufferedReader(isr);
-        } catch (FileNotFoundException e) {
+
+            String str;
+            List<String> array = new ArrayList();
+
+            while((str=bf.readLine())!=null)
+            {
+                array.add(str);
+            }
+
+            for(int i = 0;i < array.size();i++) {
+                String[] s =array.get(i).split(",");
+                Employee employee = new Employee();
+                employee.setSurname(s[SURNAME]);
+                employee.setName(s[NAME]);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                employee.setBirthday(simpleDateFormat.parse(s[BIRTHDAY]));
+                employee.setEmail(s[EMAIL]);
+
+                list.add(employee);
+            }
+
+            bf.close();
+            fis.close();
+            isr.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-        String str;
-        List<String> array = new ArrayList();
 
-        while((str=bf.readLine())!=null)
-        {
-            array.add(str);
-        }
-
-        List<Employee> list = new ArrayList<>();
-        for(int i = 0;i < array.size();i++) {
-            String[] s =array.get(i).split(",");
-            Employee employee = new Employee();
-            employee.setSurname(s[SURNAME]);
-            employee.setName(s[NAME]);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            employee.setBirthday(simpleDateFormat.parse(s[BIRTHDAY]));
-            employee.setEmail(s[EMAIL]);
-
-            list.add(employee);
-        }
         return list;
     }
 
@@ -129,7 +139,7 @@ public class BirthdayGreetings {
 
             // 发送消息
             Transport.send(message);
-            System.out.println("发送短信成功");
+            System.out.println("Send successfully");
         }catch (MessagingException mex) {
             mex.printStackTrace();
         }

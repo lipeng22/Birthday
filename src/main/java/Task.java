@@ -1,6 +1,4 @@
-import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,10 +32,6 @@ public class Task extends TimerTask {
                             employeeList.get(i).getEmail());
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
